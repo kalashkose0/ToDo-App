@@ -100,15 +100,26 @@ class home extends StatelessWidget {
 
   Widget bottomSheetContent(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(11),
+      padding: EdgeInsets.only(
+          top: 12,
+          left: 12,
+          right: 12,
+          bottom: 12 + MediaQuery.of(context).viewInsets.bottom),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.5 +
+          MediaQuery.of(context).viewInsets.bottom,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.arrow_back_ios_new_rounded, color: Colors.blue),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child:
+                    Icon(Icons.arrow_back_ios_new_rounded, color: Colors.blue),
+              ),
               SizedBox(width: 12),
               Text(
                 "Add Todo's",
@@ -165,6 +176,7 @@ class home extends StatelessWidget {
           DropdownMenu(
               width: MediaQuery.of(context).size.width - 22,
               textStyle: TextStyle(fontSize: 16, color: Colors.blue),
+              selectedTrailingIcon: Icon(Icons.low_priority_outlined),
               trailingIcon: Icon(
                 Icons.arrow_drop_down,
                 color: Colors.blue,
@@ -174,7 +186,7 @@ class home extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: Colors.blue),
               ),
               dropdownMenuEntries: ListPriority.map((Priority) =>
-                      DropdownMenuEntry(label: "Priority", value: "Priority"))
+                      DropdownMenuEntry(label: Priority, value: Priority))
                   .toList() // [
               //   DropdownMenuEntry(label: "Priority", value: "High"),
               // ],
