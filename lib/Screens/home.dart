@@ -3,6 +3,8 @@ import 'package:todo/models/todoModel.dart';
 
 class home extends StatelessWidget {
   List<TodoModel> ListTodo = [];
+  List<String> ListPriority = ["High", "Medium", "Low"];
+
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
   // TextEditingController titleController = TextEditingController();
@@ -116,20 +118,67 @@ class home extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(
-                  hintText: "Enter title here ",
-                  hintStyle:
-                      TextStyle(fontSize: 16, color: Colors.grey.shade500),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
             ],
-          )
+          ),
+          SizedBox(height: 20),
+          // Title
+          TextField(
+            controller: titleController,
+            decoration: InputDecoration(
+              hintText: "Enter title here",
+              label: Text(
+                "Title",
+                style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
+              ),
+              hintStyle: TextStyle(fontSize: 16, color: Colors.grey.shade500),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+            ),
+          ),
+
+          SizedBox(
+            height: 20,
+          ),
+          // Description
+          TextField(
+            controller: descController,
+            decoration: InputDecoration(
+              hintText: "Enter description here",
+              label: Text(
+                "Description",
+                style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
+              ),
+              hintStyle: TextStyle(fontSize: 16, color: Colors.grey.shade500),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+            ),
+          ),
+
+          SizedBox(
+            height: 20,
+          ),
+
+          DropdownMenu(
+              width: MediaQuery.of(context).size.width - 22,
+              textStyle: TextStyle(fontSize: 16, color: Colors.blue),
+              trailingIcon: Icon(
+                Icons.arrow_drop_down,
+                color: Colors.blue,
+              ),
+              label: Text(
+                "Priority",
+                style: TextStyle(fontSize: 16, color: Colors.blue),
+              ),
+              dropdownMenuEntries: ListPriority.map((Priority) =>
+                      DropdownMenuEntry(label: "Priority", value: "Priority"))
+                  .toList() // [
+              //   DropdownMenuEntry(label: "Priority", value: "High"),
+              // ],
+              ),
         ],
       ),
     );
