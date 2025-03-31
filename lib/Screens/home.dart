@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:todo/models/todoModel.dart';
 
-class home extends StatelessWidget {
+class home extends StatefulWidget {
+  @override
+  State<home> createState() => _homeState();
+}
+
+class _homeState extends State<home> {
   List<TodoModel> ListTodo = [];
+
   List<String> ListPriority = ["High", "Medium", "Low"];
 
   TextEditingController titleController = TextEditingController();
-  TextEditingController descController = TextEditingController();
-  // TextEditingController titleController = TextEditingController();
 
+  TextEditingController descController = TextEditingController();
+
+  // TextEditingController titleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,6 +202,4 @@ class home extends StatelessWidget {
       ),
     );
   }
-
-  //
 }
