@@ -7,7 +7,12 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
-  List<TodoModel> ListTodo = [];
+  List<TodoModel> ListTodo = [
+    TodoModel(
+        title: "Notes App",
+        desc: "completed with firebase",
+        assignedAt: DateTime.now().millisecondsSinceEpoch.toString()),
+  ];
 
   List<String> ListPriority = ["High", "Medium", "Low"];
 
@@ -15,7 +20,6 @@ class _homeState extends State<home> {
 
   TextEditingController descController = TextEditingController();
 
-  // TextEditingController titleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +49,47 @@ class _homeState extends State<home> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
-                      child: Checkbox(value: false, onChanged: (value) {}),
+                      elevation: 8.5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: CheckboxListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        tileColor:
+                            getBackgroundColor(ListTodo[index].priority!),
+                        value: ListTodo[index].isCompleted ??
+                            false, // Ensure it's not null
+                        onChanged: (value) {
+                          setState(() {
+                            ListTodo[index].isCompleted =
+                                value ?? false; // Directly updating the value
+                          });
+                        },
+                        title: Text(
+                          ListTodo[index].title ??
+                              "Untitled", // Handle null safety
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            decoration: (ListTodo[index].isCompleted ?? false)
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                          ),
+                        ),
+                        subtitle: Text(
+                          ListTodo[index].desc ??
+                              "No description", // Handle null safety
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            decoration: (ListTodo[index].isCompleted ?? false)
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -204,12 +248,65 @@ class _homeState extends State<home> {
             height: 20,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Checkbox(value: false, onChanged: (value){}),
+              OutlinedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return bottomSheetContent(context);
+                        // Container(
+                        //   height: MediaQuery.of(context).size.height * 0.5,
+                        // );
+                      });
+                },
+                child: Text("Add"),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(width: 1.0, color: Colors.blue),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return bottomSheetContent(context);
+                        // Container(
+                        //   height: MediaQuery.of(context).size.height * 0.5,
+                        // );
+                      });
+                },
+                child: Text("Cancel"),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(width: 1.0, color: Colors.blue),
+                  ),
+                ),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
+  }
+
+  Color getBackgroundColor(int priority) {
+    if (priority == 1) {
+      return Colors.blue;
+    } else if (priority == 2) {
+      return Colors.orange;
+    } else {
+      return Colors.red;
+    }
   }
 }
