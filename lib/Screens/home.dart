@@ -25,11 +25,13 @@ class _homeState extends State<home> {
             text: "ToDo",
             children: [
               TextSpan(
-                  text: " Manager",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue))
+                text: " Manager",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              )
             ],
           ),
         ),
@@ -198,6 +200,14 @@ class _homeState extends State<home> {
               //   DropdownMenuEntry(label: "Priority", value: "High"),
               // ],
               ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Checkbox(value: false, onChanged: (value){}),
+            ],
+          )
         ],
       ),
     );
