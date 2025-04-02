@@ -15,6 +15,7 @@ class _homeState extends State<home> {
   ];
 
   List<String> ListPriority = ["High", "Medium", "Low"];
+  String selectPriority = "High";
 
   TextEditingController titleController = TextEditingController();
 
@@ -54,6 +55,7 @@ class _homeState extends State<home> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: CheckboxListTile(
+                        controlAffinity: ListTileControlAffinity.leading,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -229,6 +231,9 @@ class _homeState extends State<home> {
           DropdownMenu(
               width: MediaQuery.of(context).size.width - 22,
               textStyle: TextStyle(fontSize: 16, color: Colors.blue),
+              onSelected: (value) {
+                selectPriority = value!;
+              },
               selectedTrailingIcon: Icon(Icons.low_priority_outlined),
               trailingIcon: Icon(
                 Icons.arrow_drop_down,
@@ -252,14 +257,19 @@ class _homeState extends State<home> {
             children: [
               OutlinedButton(
                 onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return bottomSheetContent(context);
-                        // Container(
-                        //   height: MediaQuery.of(context).size.height * 0.5,
-                        // );
-                      });
+                  ListTodo.add(
+                    TodoModel(
+                      title: titleController.text.toString(),
+                      desc: descController.text.toString(),
+                      priority: selectPriority == "High"
+                          ? 1
+                          : (selectPriority == "Medium" ? 2 : 3),
+                      assignedAt:
+                          DateTime.now().millisecondsSinceEpoch.toString(),
+                    ),
+                  );
+                  setState(() {});
+                  Navigator.pop(context);
                 },
                 child: Text("Add"),
                 style: OutlinedButton.styleFrom(
@@ -275,14 +285,7 @@ class _homeState extends State<home> {
               ),
               OutlinedButton(
                 onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return bottomSheetContent(context);
-                        // Container(
-                        //   height: MediaQuery.of(context).size.height * 0.5,
-                        // );
-                      });
+                  Navigator.pop(context);
                 },
                 child: Text("Cancel"),
                 style: OutlinedButton.styleFrom(
@@ -301,7 +304,7 @@ class _homeState extends State<home> {
   }
 
   Color getBackgroundColor(int priority) {
-    if (priority == 1) {
+    if (priority == 3) {
       return Colors.blue;
     } else if (priority == 2) {
       return Colors.orange;

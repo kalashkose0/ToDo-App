@@ -2,7 +2,7 @@ class TodoModel {
   String? title;
   String? desc;
   bool? isCompleted;
-  int? priority; // 1 -> low(blue), 2 -> medium(orange), 3 -> high(red)
+  int? priority; // 3 -> low(blue), 2 -> medium(orange), 1 -> high(red)
   String? assignedAt;
   String? completedAt;
 
